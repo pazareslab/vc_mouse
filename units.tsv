@@ -1,0 +1,3 @@
+sample	unit	platform	fq1	fq2
+cell_line	1	ILLUMINA	data/RP1_1.fastq.gz	data/RP1_2.fastq.gz
+mouse_control	1	ILLUMINA	data/R_UAX_Hlung_R1.fastq.gz	data/R_UAX_Hlung_R2.fastq.gz
