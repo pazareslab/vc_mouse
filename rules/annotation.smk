@@ -98,9 +98,12 @@ rule vep_mutect:
         cache=f"{config['annotation']['vep']['cache_directory']}/cache",
         plugins=f"{config['annotation']['vep']['cache_directory']}/plugins"
     output:
-        calls=f"{OUTDIR}/annotated/{{sample}}_mutect.vep.vcf.gz",
-        stats=f"{OUTDIR}/annotated/{{sample}}_mutect.vep.vcf.gz_summary.html"
+        tsv=f"{OUTDIR}/annotated/{{sample}}_mutect.vep.tsv",
+        stats=f"{OUTDIR}/annotated/{{sample}}_mutect.vep.tsv_summary.html"
     params:
+        cache_version = config["annotation"]["vep"]["cache_version"],
+        species = config["annotation"]["vep"]["species"],
+        assembly = config["annotation"]["vep"]["assembly"],
         plugins=f"{config['annotation']['vep']['plugins']}",
         extra=f"{config['annotation']['vep']['extra']}"
     log:
@@ -111,5 +114,24 @@ rule vep_mutect:
         runtime = get_resource("vep_mutect","runtime")
     benchmark:
         f"{LOGDIR}/benchmarks/{{sample}}.vep_mutect.txt"
-    wrapper:
-        "v3.5.0/bio/vep/annotate"
+    conda:
+        "../envs/vep.yaml"
+    shell:
+        """
+        vep \
+            --input_file {input.calls} \
+            --output_file {output.tsv} \
+            --format vcf \
+            --tab \
+            --force_overwrite \
+            --offline \
+            --cache \
+            --cache_version {params.cache_version} \
+            --dir_cache {input.cache} \
+            --species {params.species} \
+            --assembly {params.assembly} \
+            --dir_plugins {input.plugins} \
+            {params.extra} \
+            --stats_file {output.stats} \
+            > {log} 2>&1
+        """

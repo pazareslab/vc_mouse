@@ -45,12 +45,12 @@ warning("After each rule is executed, it generates a benchmark report. You can f
 
 rule all:
     input:
-        ["{OUTDIR}/annotated/{group}.snpeff.vcf.gz".format(OUTDIR=OUTDIR,group=getattr(row, 'group')) for row in samples.itertuples()],
-        ["{OUTDIR}/annotated/{group}.vep.vcf.gz".format(OUTDIR=OUTDIR,group=getattr(row, 'group')) for row in samples.itertuples()],
-        ["{OUTDIR}/annotated/{sample}_mutect.vep.vcf.gz".format(OUTDIR=OUTDIR,sample=getattr(row, 'sample')) for row in samples.itertuples() if (getattr(row, 'control') != "-")],
+        #["{OUTDIR}/annotated/{group}.snpeff.vcf.gz".format(OUTDIR=OUTDIR,group=getattr(row, 'group')) for row in samples.itertuples()],
+        #["{OUTDIR}/annotated/{group}.vep.vcf.gz".format(OUTDIR=OUTDIR,group=getattr(row, 'group')) for row in samples.itertuples()],
+        ["{OUTDIR}/annotated/{sample}_mutect.vep.tsv".format(OUTDIR=OUTDIR,sample=getattr(row, 'sample')) for row in samples.itertuples() if (getattr(row, 'control') != "-")],
         f"{OUTDIR}/qc/multiqc.html",
-        [f"{OUTDIR}/plots/{{group}}.depths.svg".format(OUTDIR=OUTDIR,group=getattr(row, 'group')) for row in samples.itertuples()],
-        [f"{OUTDIR}/plots/{{group}}.allele-freqs.svg".format(OUTDIR=OUTDIR,group=getattr(row, 'group')) for row in samples.itertuples()]
+        #[f"{OUTDIR}/plots/{{group}}.depths.svg".format(OUTDIR=OUTDIR,group=getattr(row, 'group')) for row in samples.itertuples()],
+        #[f"{OUTDIR}/plots/{{group}}.allele-freqs.svg".format(OUTDIR=OUTDIR,group=getattr(row, 'group')) for row in samples.itertuples()]
 
 
 ##### Modules #####

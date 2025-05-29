@@ -66,17 +66,16 @@ rule bwa_idx_genome:
 
 rule map_reads:
     input:
-        reads=get_trimmed_reads,
+        r1=f"{OUTDIR}/trimmed/{{sample}}-{{unit}}.1.fastq.gz",
+        r2=f"{OUTDIR}/trimmed/{{sample}}-{{unit}}.2.fastq.gz",
         idx=multiext(f"{config['ref']['genome_idx']}"+os.path.basename(config['ref']['genome']), ".amb", ".ann", ".bwt.2bit.64", ".pac"),
-        alt=f"{config['ref']['genome_idx']}"+os.path.basename(config['ref']['genome'])+".alt" if config['ref']['genome_alt'] else []
+        fasta=f"{config['ref']['genome']}"    
     output:
         temp(f"{OUTDIR}/mapped/{{sample}}-{{unit}}.sorted.bam")
     log:
         f"{LOGDIR}/bwa_mem/{{sample}}-{{unit}}.log"
     params:
         extra=get_read_group,
-        sort="samtools",
-        sort_order="coordinate"
     shadow: "shallow"
     threads: get_resource("map_reads","threads")
     resources:
@@ -84,8 +83,12 @@ rule map_reads:
         runtime = get_resource("map_reads","runtime")
     benchmark:
         f"{LOGDIR}/benchmarks/{{sample}}-{{unit}}.map_reads.txt"
-    wrapper:
-        "v3.5.0/bio/bwa-mem2/mem"
+    conda:
+        "../envs/bwa-picard.yml"
+    shell:
+        (
+            "bwa-mem2 mem {params.extra} -t {threads} {input.fasta} {input.r1} {input.r2} 2> {log} | samtools sort -@ {threads} -O bam -o {output}"
+        )
 
 rule mark_duplicates:
     input:
