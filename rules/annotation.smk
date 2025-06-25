@@ -94,7 +94,7 @@ rule vep_gatk:
 
 rule vep_mutect:
     input:
-        calls=f"{OUTDIR}/mutect_filter/{{sample}}_passlabel_filtered.vcf.gz",
+        calls=f"{OUTDIR}/mutect_filter/{{sample}}_passlabel_filtered_custom_minAF.vcf.gz",
         cache=f"{config['annotation']['vep']['cache_directory']}/cache",
         plugins=f"{config['annotation']['vep']['cache_directory']}/plugins"
     output:

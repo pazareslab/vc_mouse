@@ -157,3 +157,39 @@ rule filter_mutect_2:
         f"{LOGDIR}/benchmarks/{{sample}}.filter_mutect_2.txt"
     wrapper:
         "v3.5.0/bio/gatk/variantfiltration"
+
+rule filter_mutect_custom:
+    input:
+        vcf=f"{OUTDIR}/mutect_filter/{{sample}}_passlabel_filtered.vcf.gz",
+        ref=config["ref"]["genome"],
+    output:
+        vcf=f"{OUTDIR}/mutect_filter/{{sample}}_passlabel_filtered_custom.vcf.gz",
+    log:
+        f"{LOGDIR}/gatk/variantfiltration/{{sample}}_mutect_custom.log",
+    params:
+        extra="--exclude-filtered",
+        java_opts="-XX:ParallelGCThreads={}".format(get_resource("filter_mutect_custom","threads"))
+    resources:
+        mem_mb=get_resource("filter_mutect_custom","mem_mb"),
+        runtime=get_resource("filter_mutect_custom","runtime"),
+    benchmark:
+        f"{LOGDIR}/benchmarks/{{sample}}.filter_mutect_custom.txt",
+    wrapper:
+        "v3.5.0/bio/gatk/selectvariants"
+
+rule filter_minAF:
+    input:
+        vcf=f"{OUTDIR}/mutect_filter/{{sample}}_passlabel_filtered_custom.vcf.gz",
+    output:
+        vcf=f"{OUTDIR}/mutect_filter/{{sample}}_passlabel_filtered_custom_minAF.vcf.gz",
+    log:
+        f"{LOGDIR}/gatk/variantfiltration/{{sample}}_mutect_custom_minAF.log",
+    params:
+        extra=config["filtering"]["bcftools_filtering"]["min_AF"],
+    resources:
+        mem_mb=get_resource("filter_AF","mem_mb"),
+        runtime=get_resource("filter_AF","runtime"),
+    benchmark:
+        f"{LOGDIR}/benchmarks/{{sample}}.filter_mutect_custom_minAF.txt",
+    wrapper:
+        "v3.5.0/bio/bcftools/view"
