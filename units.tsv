@@ -1,3 +1,3 @@
 sample	unit	platform	fq1	fq2
-cell_line	1	ILLUMINA	/storage/scratch01/users/sjosa/18_pipeline_exoma_raton/data/RP1_1.fastq.gz	/storage/scratch01/users/sjosa/18_pipeline_exoma_raton/data/RP1_2.fastq.gz
-mouse_control	1	ILLUMINA	/storage/scratch01/users/sjosa/18_pipeline_exoma_raton/data/R_UAX_Hlung_R1.fastq.gz	/storage/scratch01/users/sjosa/18_pipeline_exoma_raton/data/R_UAX_Hlung_R2.fastq.gz
+control	1	ILLUMINA	/storage/scratch01/users/sjosa/18_2_exoma_KRAS_G12C/data/ctrl_mice_R1.fastq.gz	/storage/scratch01/users/sjosa/18_2_exoma_KRAS_G12C/data/ctrl_mice_R2.fastq.gz
+soto_130	1	ILLUMINA	/storage/scratch01/users/sjosa/18_2_exoma_KRAS_G12C/data/DNA_UGC_130SOTO_R1.fastq.gz	/storage/scratch01/users/sjosa/18_2_exoma_KRAS_G12C/data/DNA_UGC_130SOTO_R2.fastq.gz
