@@ -2,8 +2,8 @@ rule fastqc_untrimmed:
     input:
         lambda wc: get_fastq(wc)[wc.read]
     output:
-        html=f"{OUTDIR}/qc/fastqc/{{sample}}-{{unit}}-{{read}}_fastqc.html",
-        zip=f"{OUTDIR}/qc/fastqc/{{sample}}-{{unit}}-{{read}}_fastqc.zip"
+        html=f"{OUTDIR}/qc/fastqc/untrimmed/{{sample}}-{{unit}}-{{read}}_fastqc.html",
+        zip=f"{OUTDIR}/qc/fastqc/untrimmed/{{sample}}-{{unit}}-{{read}}_fastqc.zip"
     log:
         f"{LOGDIR}/fastqc_untrimmed/{{sample}}-{{unit}}-{{read}}.log"
     threads: get_resource("fastqc","threads")
@@ -19,8 +19,8 @@ rule fastqc_trimmed:
     input:
         lambda wc: get_trimmed_reads_qc(wc)[wc.read]
     output:
-        html=f"{OUTDIR}/qc/fastqc/{{sample}}-{{unit}}-{{read}}_trimmed_fastqc.html",
-        zip=f"{OUTDIR}/qc/fastqc/{{sample}}-{{unit}}-{{read}}_trimmed_fastqc.zip"
+        html=f"{OUTDIR}/qc/fastqc/trimmed/{{sample}}-{{unit}}-{{read}}_fastqc.html",
+        zip=f"{OUTDIR}/qc/fastqc/trimmed/{{sample}}-{{unit}}-{{read}}_fastqc.zip"
     log:
         f"{LOGDIR}/fastqc_trimmed/{{sample}}-{{unit}}-{{read}}.log"
     threads: get_resource("fastqc","threads")
@@ -109,10 +109,10 @@ if "restrict_regions" in config["processing"]:
 
 rule multiqc:
     input:
-         [expand(f"{OUTDIR}/qc/fastqc/{row.sample}-{row.unit}-{{r}}_fastqc.zip", r=["r1"]) for row in units.itertuples() if (str(getattr(row, 'fq2')) == "nan")],
-         [expand(f"{OUTDIR}/qc/fastqc/{row.sample}-{row.unit}-{{r}}_fastqc.zip", r=["r1","r2"]) for row in units.itertuples() if (str(getattr(row, 'fq2')) != "nan")],
-         [expand(f"{OUTDIR}/qc/fastqc/{row.sample}-{row.unit}-{{r}}_trimmed_fastqc.zip", r=["r1"]) for row in units.itertuples() if (str(getattr(row, 'fq2')) == "nan")],
-         [expand(f"{OUTDIR}/qc/fastqc/{row.sample}-{row.unit}-{{r}}_trimmed_fastqc.zip", r=["r1","r2"]) for row in units.itertuples() if (str(getattr(row, 'fq2')) != "nan")],
+         [expand(f"{OUTDIR}/qc/fastqc/untrimmed/{row.sample}-{row.unit}-{{r}}_fastqc.zip", r=["r1"]) for row in units.itertuples() if (str(getattr(row, 'fq2')) == "nan")],
+         [expand(f"{OUTDIR}/qc/fastqc/untrimmed/{row.sample}-{row.unit}-{{r}}_fastqc.zip", r=["r1","r2"]) for row in units.itertuples() if (str(getattr(row, 'fq2')) != "nan")],
+         [expand(f"{OUTDIR}/qc/fastqc/trimmed/{row.sample}-{row.unit}-{{r}}_fastqc.zip", r=["r1"]) for row in units.itertuples() if (str(getattr(row, 'fq2')) == "nan")],
+         [expand(f"{OUTDIR}/qc/fastqc/trimmed/{row.sample}-{row.unit}-{{r}}_fastqc.zip", r=["r1","r2"]) for row in units.itertuples() if (str(getattr(row, 'fq2')) != "nan")],
          expand(f"{OUTDIR}/qc/samtools-stats/{{u.sample}}-{{u.unit}}.txt", u=units.itertuples()),
          expand(f"{OUTDIR}/qc/dedup/{{u.sample}}-{{u.unit}}.metrics.txt", u=units.itertuples()),
          expand(f"{OUTDIR}/qc/picard/{{u.sample}}-{{u.unit}}.txt", u=units.itertuples()) if config["processing"].get("restrict_regions") else [],
