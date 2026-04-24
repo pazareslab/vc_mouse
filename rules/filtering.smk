@@ -177,6 +177,17 @@ rule filter_mutect_custom:
     wrapper:
         "v3.5.0/bio/gatk/selectvariants"
 
+def get_min_af_filter(wildcards):
+    threshold = config["filtering"]["bcftools_filtering"]["min_AF_threshold"]
+    control = samples.loc[wildcards.sample, "control"]
+
+    if control == wildcards.sample:
+        af_index = "0:0"   # tumor-only
+    else:
+        af_index = "1:0"   # tumor-normal
+
+    return f'-i "FORMAT/AF[{af_index}] >= {threshold}"'
+
 rule filter_minAF:
     input:
         vcf=f"{OUTDIR}/mutect_filter/{{sample}}_passlabel_filtered_custom.vcf.gz",
@@ -185,7 +196,7 @@ rule filter_minAF:
     log:
         f"{LOGDIR}/gatk/variantfiltration/{{sample}}_mutect_custom_minAF.log",
     params:
-        extra=config["filtering"]["bcftools_filtering"]["min_AF"],
+        extra = get_min_af_filter,
     resources:
         mem_mb=get_resource("filter_AF","mem_mb"),
         runtime=get_resource("filter_AF","runtime"),

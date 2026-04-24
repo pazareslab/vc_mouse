@@ -2,18 +2,18 @@ samples: samples.tsv
 units: units.tsv
 contigs: contigs.tsv
 
-outdir: "/storage/scratch01/users/sjosa/18_2_exoma_KRAS_G12C/out"
-logdir: "/storage/scratch01/users/sjosa/18_2_exoma_KRAS_G12C/log"
+outdir: "/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/out/tumor_only"
+logdir: "/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/log/tumor_only"
 
 ref:
   # Path to the reference genome, ideally as it is provided by the GATK bundle.
-  genome: /storage/scratch01/users/sjosa/18_2_exoma_KRAS_G12C/res/genome/GRCm38.primary_assembly.genome.fa.gz
+  genome: /storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/res/genome/GRCm38.primary_assembly.genome.fa.gz
   # Path to the directory with the reference indexes for the aligment. Indexes will be retrieve from this directory or created in it if they do not exist
-  genome_idx: /storage/scratch01/users/sjosa/18_2_exoma_KRAS_G12C/res/genome/
+  genome_idx: /storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/res/genome/
   # If the reference genome contains alternative contigs, set 'genome_alt' to true to account for their presence in the alignment. The corresponding '.alt' index file should be present in the genome index directory with the same basename as the reference genome. For more details, please, visit https://github.com/lh3/bwa/blob/master/README-alt.md and https://gatk.broadinstitute.org/hc/en-us/articles/360037498992--How-to-Map-reads-to-a-reference-with-alternate-contigs-like-GRCH38.
   genome_alt: false
   # Path to any database of known variants, ideally as it is provided by the GATK bundle. This file has to be compressed in bgzip format.
-  known_variants: /storage/scratch01/users/sjosa/18_2_exoma_KRAS_G12C/res/known_variants/MGI.vep.chr.vcf.gz
+  known_variants: /storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/res/known_variants/renamed_mgp_REL2005_snps_indels.vcf.gz
 
 filtering:
   # Set to true in order to apply machine learning based recalibration of
@@ -33,13 +33,13 @@ filtering:
     lrom: false
   bcftools_filtering:
     #apply AF threshold to avoid artifacts and false positive variants
-    min_AF: '-i "FORMAT/AF[1:0] >= 0.05"'
+    min_AF_threshold: 0.05
 
 processing:
   remove_duplicates: true
   # Uncomment and point to a bed file with, e.g., captured regions if necessary,
   # see https://gatkforums.broadinstitute.org/gatk/discussion/4133/when-should-i-use-l-to-pass-in-a-list-of-intervals.
-  restrict_regions: /storage/scratch01/users/sjosa/18_2_exoma_KRAS_G12C/res/exome_interval/S0276129_Covered_mm9TOmm10.bed
+  restrict_regions: /storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/res/S0276129_Covered_mm9TOmm10.bed
   # If regions are restricted, uncomment this to enlarge them by the given value in order to include
   # flanking areas.
   # region_padding: 100
@@ -87,21 +87,21 @@ params:
 annotation:
   snpeff:
     #Genome database of SnpEff to be used in the annotation with this resource. Available databases can be checked with java -jar snpEff.jar databases
-    database: GRCh38.102
+    database: GRCm38.102
     #Indicate the path to the cache files. Files will be accessed from this directory or downloaded in it if they do not exist
-    cache_directory: /storage/scratch01/users/sjosa/18_2_exoma_KRAS_G12C/res/snpeff
+    cache_directory: /storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/res/snpeff
   vep:
     #Indicate the version of the ensembl cache. e.g. 100.
     cache_version: 102
     #Indicate the path to the cache and plugin files. Files will be accessed from this directory or downloaded in it if they do not exist
-    cache_directory: /storage/scratch01/users/sjosa/18_2_exoma_KRAS_G12C/res/VEP/VEP102
+    cache_directory: /storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/res/VEP/VEP102
     #Indicate the assembly version of the reference genome
     assembly: GRCm38
     #Indicate the species to annotate
     species: mus_musculus
     #Indicate the annotations to include and plugins to use with the VEP execution, along with additional parameters according to your preferences. See the documentation (https://www.ensembl.org/info/docs/tools/vep/script/vep_options.html) for the details.
     plugins: []
-    extra: "--sift b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --af --variant_class --xref_refseq --af_1kg --af_gnomade --appris --fasta /storage/scratch01/users/sjosa/18_2_exoma_KRAS_G12C/res/genome/GRCm38.primary_assembly.genome.fa.gz"
+    extra: "--sift b --ccds --uniprot --hgvs --symbol --numbers --domains --regulatory --canonical --protein --biotype --uniprot --tsl --af --variant_class --xref_refseq --af_1kg --af_gnomade --appris --fasta /storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/res/genome/GRCm38.primary_assembly.genome.fa.gz"
 
 resources:
     default:
