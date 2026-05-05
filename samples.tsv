@@ -1,5 +1,4 @@
 group	sample	control
-1	soto_130	soto_130
-2	soto_38	soto_38
-3	ctrl_45	ctrl_45
-4	ctrl_98	ctrl_98
+1	soto_130	control
+2	soto_38	control
+3	control	-

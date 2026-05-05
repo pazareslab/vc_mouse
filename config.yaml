@@ -2,8 +2,8 @@ samples: samples.tsv
 units: units.tsv
 contigs: contigs.tsv
 
-outdir: "/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/out/tumor_only"
-logdir: "/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/log/tumor_only"
+outdir: "/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/out/tumor_normal"
+logdir: "/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/log/tumor_normal"
 
 ref:
   # Path to the reference genome, ideally as it is provided by the GATK bundle.

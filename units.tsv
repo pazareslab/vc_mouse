@@ -1,5 +1,4 @@
 sample	unit	platform	fq1	fq2
+control	1	ILLUMINA	/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/data/ctrl_mice_R1.fastq.gz	/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/data/ctrl_mice_R2.fastq.gz
 soto_130	1	ILLUMINA	/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/data/DNA_UGC_130SOTO_R1.fastq.gz	/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/data/DNA_UGC_130SOTO_R2.fastq.gz
-soto_38	2	ILLUMINA	/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/data/DNA_UGC_38_SOTO_R1.fastq.gz	/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/data/DNA_UGC_38_SOTO_R2.fastq.gz
-ctrl_45	3	ILLUMINA	/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/data/DNA_UGC_45_CTRL_R1.fastq.gz	/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/data/DNA_UGC_45_CTRL_R2.fastq.gz
-ctrl_98	4	ILLUMINA	/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/data/DNA_UGC_98_CTRL_R1.fastq.gz	/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/data/DNA_UGC_98_CTRL_R2.fastq.gz
+soto_38	1	ILLUMINA	/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/data/DNA_UGC_38_SOTO_R1.fastq.gz	/storage/scratch01/users/sjosa/18_2_ratones_KRASmut_TP53mut/data/DNA_UGC_38_SOTO_R2.fastq.gz
